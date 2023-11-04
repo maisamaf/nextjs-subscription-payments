@@ -1,81 +1,91 @@
-import Link from 'next/link';
-
-import Logo from '@/components/icons/Logo';
+import { Typography } from '../MaterialTailwind';
 import GitHub from '@/components/icons/GitHub';
+import Logo from '@/components/icons/Logo';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="mx-auto max-w-[1920px] px-6 bg-zinc-900">
-      <div className="grid grid-cols-1 gap-8 py-12 text-white transition-colors duration-150 border-b lg:grid-cols-12 border-zinc-600 bg-zinc-900">
+    <footer className="mx-auto max-w-[1920px] px-6 bg-[rgb(24,24,27)]">
+      <div className="grid grid-cols-1 gap-8 py-12 text-white transition-colors duration-150 border-b lg:grid-cols-12 border-gray-600 bg-[rgb(24,24,27)]">
         <div className="col-span-1 lg:col-span-2">
-          <Link
+          <Typography
+            as={Link}
             href="/"
             className="flex items-center flex-initial font-bold md:mr-24"
           >
-            <span className="mr-2 border rounded-full border-zinc-700">
+            <Typography
+              as="span"
+              className="mr-2 border rounded-full border-[rgb(63,63,70)]"
+            >
               <Logo />
-            </span>
-            <span>ACME</span>
-          </Link>
+            </Typography>
+            <Typography as="span">ACME</Typography>
+          </Typography>
         </div>
         <div className="col-span-1 lg:col-span-2">
           <ul className="flex flex-col flex-initial md:flex-1">
             <li className="py-3 md:py-0 md:pb-4">
-              <Link
+              <Typography
+                as={Link}
                 href="/"
-                className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+                className="text-white transition duration-150 ease-in-out hover:text-[rgb(228,228,231)]"
               >
                 Home
-              </Link>
+              </Typography>
             </li>
             <li className="py-3 md:py-0 md:pb-4">
-              <Link
+              <Typography
+                as={Link}
                 href="/"
-                className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+                className="text-white transition duration-150 ease-in-out hover:text-[rgb(228,228,231)]"
               >
                 About
-              </Link>
+              </Typography>
             </li>
             <li className="py-3 md:py-0 md:pb-4">
-              <Link
+              <Typography
+                as={Link}
                 href="/"
-                className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+                className="text-white transition duration-150 ease-in-out hover:text-[rgb(228,228,231)]"
               >
                 Careers
-              </Link>
+              </Typography>
             </li>
             <li className="py-3 md:py-0 md:pb-4">
-              <Link
+              <Typography
+                as={Link}
                 href="/"
-                className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+                className="text-white transition duration-150 ease-in-out hover:text-[rgb(228,228,231)]"
               >
                 Blog
-              </Link>
+              </Typography>
             </li>
           </ul>
         </div>
         <div className="col-span-1 lg:col-span-2">
           <ul className="flex flex-col flex-initial md:flex-1">
             <li className="py-3 md:py-0 md:pb-4">
-              <p className="font-bold text-white transition duration-150 ease-in-out hover:text-zinc-200">
+              <Typography className="font-bold text-white transition duration-150 ease-in-out hover:text-[rgb(228,228,231)]">
                 LEGAL
-              </p>
+              </Typography>
             </li>
             <li className="py-3 md:py-0 md:pb-4">
-              <Link
+              <Typography
+                as={Link}
                 href="/"
-                className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+                className="text-white transition duration-150 ease-in-out hover:text-[rgb(228,228,231)]"
               >
                 Privacy Policy
-              </Link>
+              </Typography>
             </li>
             <li className="py-3 md:py-0 md:pb-4">
-              <Link
+              <Typography
+                as={Link}
                 href="/"
-                className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+                className="text-white transition duration-150 ease-in-out hover:text-[rgb(228,228,231)]"
               >
                 Terms of Use
-              </Link>
+              </Typography>
             </li>
           </ul>
         </div>
@@ -90,14 +100,16 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-between py-12 space-y-4 md:flex-row bg-zinc-900">
+      <div className="flex flex-col items-center justify-between py-12 space-y-4 md:flex-row bg-[rgb(24,24,27)]">
         <div>
-          <span>
+          <Typography as="span">
             &copy; {new Date().getFullYear()} ACME, Inc. All rights reserved.
-          </span>
+          </Typography>
         </div>
         <div className="flex items-center">
-          <span className="text-white">Crafted by</span>
+          <Typography as="span" className="text-white">
+            Crafted by
+          </Typography>
           <a href="https://vercel.com" aria-label="Vercel.com Link">
             <img
               src="/vercel.svg"

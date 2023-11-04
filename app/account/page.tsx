@@ -4,14 +4,20 @@ import {
   getUserDetails,
   getSubscription
 } from '@/app/supabase-server';
-import Button from '@/components/ui/Button';
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+  Input
+} from '@/components/ui/MaterialTailwind';
 import { Database } from '@/types_db';
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { ReactNode } from 'react';
 
 export default async function Account() {
   const [session, userDetails, subscription] = await Promise.all([
@@ -67,119 +73,129 @@ export default async function Account() {
     <section className="mb-32 bg-black">
       <div className="max-w-6xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center sm:flex sm:flex-col">
-          <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
+          <Typography
+            variant="h1"
+            className="font-extrabold sm:text-center sm:text-6xl"
+          >
             Account
-          </h1>
-          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
+          </Typography>
+          <Typography
+            variant="lead"
+            className="max-w-2xl m-auto mt-5 sm:text-center sm:text-2xl text-[rgb(228,228,231)]"
+          >
             We partnered with Stripe for a simplified billing.
-          </p>
+          </Typography>
         </div>
       </div>
       <div className="p-4">
-        <Card
-          title="Your Plan"
-          description={
-            subscription
-              ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
-              : 'You are not currently subscribed to any plan.'
-          }
-          footer={<ManageSubscriptionButton session={session} />}
-        >
-          <div className="mt-8 mb-4 text-xl font-semibold">
-            {subscription ? (
-              `${subscriptionPrice}/${subscription?.prices?.interval}`
-            ) : (
-              <Link href="/">Choose your plan</Link>
-            )}
-          </div>
+        <Card className="w-full max-w-3xl m-auto my-8 border rounded-md p border-[rgb(63,63,70)] bg-transparent">
+          <CardBody className="px-5 py-4">
+            <Typography variant="h4" className="font-medium" color="white">
+              Your Plan
+            </Typography>
+            <Typography className="text-[rgb(212,212,216)]">
+              {subscription
+                ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
+                : 'You are not currently subscribed to any plan.'}
+            </Typography>
+            <div className="mt-8 mb-4 text-xl font-semibold text-white">
+              {subscription ? (
+                `${subscriptionPrice}/${subscription?.prices?.interval}`
+              ) : (
+                <Link href="/">Choose your plan</Link>
+              )}
+            </div>
+          </CardBody>
+          <CardFooter className="p-4 border-t rounded-b-md border-[rgb(63,63,70)] bg-[rgb(24,24,27)] text-[rgb(113,113,122)]">
+            <ManageSubscriptionButton session={session} />
+          </CardFooter>
         </Card>
-        <Card
-          title="Your Name"
-          description="Please enter your full name, or a display name you are comfortable with."
-          footer={
+
+        <Card className="w-full max-w-3xl m-auto my-8 border rounded-md p border-[rgb(63,63,70)] bg-transparent">
+          <CardBody className="px-5 py-4">
+            <Typography variant="h4" className="font-medium" color="white">
+              Your Name
+            </Typography>
+            <Typography className="text-[rgb(212,212,216)]">
+              Please enter your full name, or a display name you are comfortable
+              with.{' '}
+            </Typography>
+            <div className="mt-8 mb-4 text-xl font-semibold">
+              <form id="nameForm" action={updateName}>
+                <div className="w-1/2">
+                  <Input
+                    type="text"
+                    name="name"
+                    size="lg"
+                    color="white"
+                    placeholder="Your name"
+                    className="!border focus:!border-gray-300  text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 !border-gray-900 focus:ring-gray-900/10"
+                    labelProps={{
+                      className: 'hidden'
+                    }}
+                    maxLength={64}
+                    containerProps={{ className: 'min-w-[100px]' }}
+                    crossOrigin=""
+                  />
+                </div>
+              </form>
+            </div>
+          </CardBody>
+          <CardFooter className="p-4 border-t rounded-b-md border-[rgb(63,63,70)] bg-[rgb(24,24,27)] text-[rgb(113,113,122)]">
             <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-              <p className="pb-4 sm:pb-0">64 characters maximum</p>
-              <Button
-                variant="slim"
-                type="submit"
-                form="nameForm"
-                disabled={true}
-              >
+              <Typography className="pb-4 sm:pb-0">
+                64 characters maximum
+              </Typography>
+              <Button type="submit" form="nameForm" disabled className="">
                 {/* WARNING - In Next.js 13.4.x server actions are in alpha and should not be used in production code! */}
                 Update Name
               </Button>
-            </div>
-          }
-        >
-          <div className="mt-8 mb-4 text-xl font-semibold">
-            <form id="nameForm" action={updateName}>
-              <input
-                type="text"
-                name="name"
-                className="w-1/2 p-3 rounded-md bg-zinc-800"
-                defaultValue={userDetails?.full_name ?? ''}
-                placeholder="Your name"
-                maxLength={64}
-              />
-            </form>
-          </div>
+            </div>{' '}
+          </CardFooter>
         </Card>
-        <Card
-          title="Your Email"
-          description="Please enter the email address you want to use to login."
-          footer={
+        <Card className="w-full max-w-3xl m-auto my-8 border rounded-md p border-[rgb(63,63,70)] bg-transparent">
+          <CardBody className="px-5 py-4">
+            <Typography variant="h4" className="font-medium" color="white">
+              Your Email
+            </Typography>
+            <Typography className="text-[rgb(212,212,216)]">
+              Please enter the email address you want to use to login.
+            </Typography>
+            <div className="mt-8 mb-4 text-xl font-semibold">
+              <form id="emailForm" action={updateEmail}>
+                <div className="w-1/2">
+                  <Input
+                    type="email"
+                    name="email"
+                    size="lg"
+                    color="white"
+                    placeholder="Your email"
+                    defaultValue={user ? user.email : ''}
+                    className="!border focus:!border-gray-300  text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 !border-gray-900 focus:ring-gray-900/10"
+                    labelProps={{
+                      className: 'hidden'
+                    }}
+                    maxLength={64}
+                    containerProps={{ className: 'min-w-[100px]' }}
+                    crossOrigin
+                  />
+                </div>
+              </form>
+            </div>
+          </CardBody>
+          <CardFooter className="p-4 border-t rounded-b-md border-[rgb(63,63,70)] bg-[rgb(24,24,27)] text-[rgb(113,113,122)]">
             <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-              <p className="pb-4 sm:pb-0">
+              <Typography className="pb-4 sm:pb-0">
                 We will email you to verify the change.
-              </p>
-              <Button
-                variant="slim"
-                type="submit"
-                form="emailForm"
-                disabled={true}
-              >
+              </Typography>
+              <Button type="submit" form="emailForm" disabled>
                 {/* WARNING - In Next.js 13.4.x server actions are in alpha and should not be used in production code! */}
                 Update Email
               </Button>
             </div>
-          }
-        >
-          <div className="mt-8 mb-4 text-xl font-semibold">
-            <form id="emailForm" action={updateEmail}>
-              <input
-                type="text"
-                name="email"
-                className="w-1/2 p-3 rounded-md bg-zinc-800"
-                defaultValue={user ? user.email : ''}
-                placeholder="Your email"
-                maxLength={64}
-              />
-            </form>
-          </div>
+          </CardFooter>
         </Card>
       </div>
     </section>
-  );
-}
-
-interface Props {
-  title: string;
-  description?: string;
-  footer?: ReactNode;
-  children: ReactNode;
-}
-
-function Card({ title, description, footer, children }: Props) {
-  return (
-    <div className="w-full max-w-3xl m-auto my-8 border rounded-md p border-zinc-700">
-      <div className="px-5 py-4">
-        <h3 className="mb-1 text-2xl font-medium">{title}</h3>
-        <p className="text-zinc-300">{description}</p>
-        {children}
-      </div>
-      <div className="p-4 border-t rounded-b-md border-zinc-700 bg-zinc-900 text-zinc-500">
-        {footer}
-      </div>
-    </div>
   );
 }

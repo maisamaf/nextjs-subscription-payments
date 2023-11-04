@@ -1,12 +1,13 @@
+import { Typography } from '@/components/ui/MaterialTailwind';
 import s from './LoadingDots.module.css';
 
 const LoadingDots = () => {
   return (
-    <span className={s.root}>
-      <span />
-      <span />
-      <span />
-    </span>
+    <Typography className={s.root}>
+      <Typography as="span" children />
+      <Typography  as="span" children/>
+      <Typography  as="span" children/>
+    </Typography>
   );
 };
 

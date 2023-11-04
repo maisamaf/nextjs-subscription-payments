@@ -1,8 +1,7 @@
 'use client';
 
-import Button from '@/components/ui/Button';
 import { postData } from '@/utils/helpers';
-
+import { Typography, Button } from '@material-tailwind/react';
 import { Session } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
@@ -24,15 +23,18 @@ export default function ManageSubscriptionButton({ session }: Props) {
   };
 
   return (
-    <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-      <p className="pb-4 sm:pb-0">Manage your subscription on Stripe.</p>
+    <Typography as='div' className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
+      <Typography className="pb-4 sm:pb-0">
+        Manage your subscription on Stripe.
+      </Typography>
       <Button
-        variant="slim"
+        color="white"
+        size="lg"
         disabled={!session}
         onClick={redirectToCustomerPortal}
       >
         Open customer portal
       </Button>
-    </div>
+    </Typography>
   );
 }

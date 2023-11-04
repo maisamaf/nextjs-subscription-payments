@@ -1,9 +1,11 @@
 'use client';
 
-import Button from '@/components/ui/Button';
+import LoadingDots from './ui/LoadingDots';
 import { Database } from '@/types_db';
 import { postData } from '@/utils/helpers';
 import { getStripe } from '@/utils/stripe-client';
+import { Button } from '@material-tailwind/react';
+import { Typography } from '@material-tailwind/react';
 import { Session, User } from '@supabase/supabase-js';
 import cn from 'classnames';
 import { useRouter } from 'next/navigation';
@@ -76,19 +78,23 @@ export default function Pricing({
     return (
       <section className="bg-black">
         <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
-          <div className="sm:flex sm:flex-col sm:align-center"></div>
-          <p className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-            No subscription pricing plans found. Create them in your{' '}
-            <a
-              className="text-pink-500 underline"
-              href="https://dashboard.stripe.com/products"
-              rel="noopener noreferrer"
-              target="_blank"
+          <div className="sm:flex sm:flex-col sm:align-center">
+            <Typography
+              variant="h2"
+              className="font-extrabold text-white sm:text-center sm:text-6xl"
             >
-              Stripe Dashboard
-            </a>
-            .
-          </p>
+              No subscription pricing plans found. Create them in your{' '}
+              <a
+                className="text-pink-500 underline"
+                href="https://dashboard.stripe.com/products"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Stripe Dashboard
+              </a>
+              .
+            </Typography>
+          </div>
         </div>
         <LogoCloud />
       </section>
@@ -99,16 +105,23 @@ export default function Pricing({
       <section className="bg-black">
         <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
           <div className="sm:flex sm:flex-col sm:align-center">
-            <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
+            <Typography
+              variant="h1"
+              className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl"
+            >
               Pricing Plans
-            </h1>
-            <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
+            </Typography>
+            <Typography
+              variant="lead"
+              className="max-w-2xl m-auto mt-5 text-gray-200 sm:text-center sm:text-2xl"
+            >
               Start building for free, then add a site plan to go live. Account
               plans unlock additional features.
-            </p>
-            <div className="relative flex self-center mt-12 border rounded-lg bg-zinc-900 border-zinc-800">
-              <div className="border border-pink-500 border-opacity-50 divide-y rounded-lg shadow-sm bg-zinc-900 divide-zinc-600">
-                <div className="p-6 py-2 m-1 text-2xl font-medium text-white rounded-md shadow-sm border-zinc-800 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8">
+            </Typography>
+
+            <div className="relative flex self-center mt-12 bg-gray-900 border border-gray-800 rounded-lg">
+              <div className="bg-gray-900 border border-pink-500 border-opacity-50 divide-y divide-gray-600 rounded-lg shadow-sm">
+                <div className="p-6 py-2 m-1 text-2xl font-medium text-white border-gray-800 rounded-md shadow-sm whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8">
                   {products[0].name}
                 </div>
               </div>
@@ -126,30 +139,35 @@ export default function Pricing({
                 return (
                   <div
                     key={price.interval}
-                    className="divide-y rounded-lg shadow-sm divide-zinc-600 bg-zinc-900"
+                    className="bg-gray-900 divide-y divide-gray-600 rounded-lg shadow-sm"
                   >
                     <div className="p-6">
-                      <p>
-                        <span className="text-5xl font-extrabold white">
+                      <Typography>
+                        <Typography
+                          as="span"
+                          className="text-5xl font-extrabold white"
+                        >
                           {priceString}
-                        </span>
-                        <span className="text-base font-medium text-zinc-100">
+                        </Typography>
+                        <Typography
+                          as="span"
+                          className="text-base font-medium text-gray-100"
+                        >
                           /{price.interval}
-                        </span>
-                      </p>
-                      <p className="mt-4 text-zinc-300">{price.description}</p>
-                      <Button
-                        variant="slim"
-                        type="button"
-                        disabled={false}
-                        loading={priceIdLoading === price.id}
-                        onClick={() => handleCheckout(price)}
-                        className="block w-full py-2 mt-12 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900 "
-                      >
+                        </Typography>
+                      </Typography>
+                      <Typography color="gray">{price.description}</Typography>
+
+                      <Button size="md" onClick={() => handleCheckout(price)}>
                         {products[0].name ===
-                        subscription?.prices?.products?.name
+                          subscription?.prices?.products?.name
                           ? 'Manage'
                           : 'Subscribe'}
+                        {priceIdLoading === price.id && (
+                          <i className="pl-2 m-0">
+                            <LoadingDots />
+                          </i>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -166,23 +184,22 @@ export default function Pricing({
     <section className="bg-black">
       <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
         <div className="sm:flex sm:flex-col sm:align-center">
-          <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
+          <Typography variant='h1' className="!text-4xl !font-extrabold !text-white sm:text-center sm:text-6xl">
             Pricing Plans
-          </h1>
-          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
+          </Typography>
+          <Typography as='p' className="max-w-2xl m-auto mt-5 text-xl text-gray-200 sm:text-center sm:text-2xl">
             Start building for free, then add a site plan to go live. Account
             plans unlock additional features.
-          </p>
-          <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
+          </Typography>
+          <div className="relative self-center mt-6 bg-gray-900 rounded-lg p-0.5 flex sm:mt-8 border border-gray-800">
             {intervals.includes('month') && (
               <button
                 onClick={() => setBillingInterval('month')}
                 type="button"
-                className={`${
-                  billingInterval === 'month'
-                    ? 'relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white'
-                    : 'ml-0.5 relative w-1/2 border border-transparent text-zinc-400'
-                } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+                className={`${billingInterval === 'month'
+                    ? 'relative w-1/2 bg-gray-700 border-gray-800 shadow-sm text-white'
+                    : 'ml-0.5 relative w-1/2 border border-transparent text-gray-400'
+                  } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
               >
                 Monthly billing
               </button>
@@ -191,11 +208,10 @@ export default function Pricing({
               <button
                 onClick={() => setBillingInterval('year')}
                 type="button"
-                className={`${
-                  billingInterval === 'year'
-                    ? 'relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white'
-                    : 'ml-0.5 relative w-1/2 border border-transparent text-zinc-400'
-                } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+                className={`${billingInterval === 'year'
+                    ? 'relative w-1/2 bg-gray-700 border-gray-800 shadow-sm text-white'
+                    : 'ml-0.5 relative w-1/2 border border-transparent text-gray-400'
+                  } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
               >
                 Yearly billing
               </button>
@@ -217,7 +233,7 @@ export default function Pricing({
               <div
                 key={product.id}
                 className={cn(
-                  'rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-900',
+                  'rounded-lg shadow-sm divide-y divide-gray-600 bg-gray-900',
                   {
                     'border border-pink-500': subscription
                       ? product.name === subscription?.prices?.products?.name
@@ -226,27 +242,25 @@ export default function Pricing({
                 )}
               >
                 <div className="p-6">
-                  <h2 className="text-2xl font-semibold leading-6 text-white">
+                  <Typography variant='h2' className="!text-2xl !leading-6 text-white">
                     {product.name}
-                  </h2>
-                  <p className="mt-4 text-zinc-300">{product.description}</p>
-                  <p className="mt-8">
-                    <span className="text-5xl font-extrabold white">
+                  </Typography>
+                  <Typography as="span" className="mt-4 text-gray-300">{product.description}</Typography>
+                  <Typography className="mt-8">
+                    <Typography as="span" className="text-5xl font-extrabold text-white">
                       {priceString}
-                    </span>
-                    <span className="text-base font-medium text-zinc-100">
+                    </Typography>
+                    <Typography as="span" className="text-base font-medium text-gray-100">
                       /{billingInterval}
-                    </span>
-                  </p>
-                  <Button
-                    variant="slim"
-                    type="button"
-                    disabled={!session}
-                    loading={priceIdLoading === price.id}
-                    onClick={() => handleCheckout(price)}
-                    className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900"
-                  >
+                    </Typography>
+                  </Typography>
+                  <Button size="md" onClick={() => handleCheckout(price)} disabled={!session}>
                     {subscription ? 'Manage' : 'Subscribe'}
+                    {priceIdLoading === price.id && (
+                      <i className="pl-2 m-0">
+                        <LoadingDots />
+                      </i>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -262,7 +276,7 @@ export default function Pricing({
 function LogoCloud() {
   return (
     <div>
-      <p className="mt-24 text-xs uppercase text-zinc-400 text-center font-bold tracking-[0.3em]">
+      <p className="mt-24 text-xs uppercase text-gray-400 text-center font-bold tracking-[0.3em]">
         Brought to you by
       </p>
       <div className="flex flex-col items-center my-12 space-y-4 sm:mt-8 sm:space-y-0 md:mx-auto md:max-w-2xl sm:grid sm:gap-6 sm:grid-cols-5">
